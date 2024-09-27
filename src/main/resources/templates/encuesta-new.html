@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Nueva encuesta</title>
+</head>
+<body>
+    <form th:action="@{/encuestas/new}" method="post" th:object="${encuesta}">
+        <input placeholder="Nombre..." id="nombre" value="nombre" th:field="*{nombre}"><br><br>
+        <input placeholder="Apellidos..." id="apellidos" value="apellidos" th:field="*{apellidos}"><br><br>
+        <input placeholder="Email..." id="email" value="email" th:field="*{email}"><br><br>
+        <input placeholder="Edad..." id="edad" value="edad" th:field="*{edad}"><br><br>
+        <input placeholder="Teléfono..." id="telefono" value="telefono" th:field="*{telefono}"><br><br>
+        <input placeholder="Fecha Estancia..." id="fechaEstancia" value="fechaEstancia" th:field="*{fechaEstancia}"><br><br>
+        <select placeholder="Motivo de visita..." id="motivoVisita" value="motivoVisita" th:field="*{motivoVisita}">
+            <option value="" disabled selected>Seleccionar motivo:</option>
+        </select><br><br>
+
+        <!--<input type="checkbox" id="isRestaurante" value="isRestaurante" th:field="*{isRestaurante}"><br>
+        <input type="checkbox" id="isGimnasio" value="isGimnasio" th:field="*{isGimnasio}"><br>
+        <input type="checkbox" id="isSpa" value="isSpa" th:field="*{isSpa}"><br>
+        <input type="checkbox" id="isPiscina" value="isPiscina" th:field="*{isPiscina}"><br>
+        <input type="checkbox" id="isRoomservice" value="isRoomservice" th:field="*{isRoomservice}"><br>-->
+
+        <input type="radio" value="Muy satisfecho" th:field="*{nivelSatisfaccion}"><br><br>
+        <input type="radio" value="Satisfecho" th:field="*{nivelSatisfaccion}"><br><br>
+        <input type="radio" value="Neutral" th:field="*{nivelSatisfaccion}"><br><br>
+        <input type="radio" value="Insatisfecho" th:field="*{nivelSatisfaccion}"><br><br>
+        <input type="radio" value="Muy insatisfecho" th:field="*{nivelSatisfaccion}"><br><br>
+
+        <textarea placeholder="Otro..." id="otrosComentarios" value="otrosComentarios" th:field="*{otrosComentarios}"></textarea><br><br>
+        <input type="submit" value="Enviar">
+    </form>
+</body>
+</html>
