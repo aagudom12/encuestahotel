@@ -6,29 +6,82 @@
 </head>
 <body>
     <form th:action="@{/encuestas/new}" method="post" th:object="${encuesta}">
-        <input placeholder="Nombre..." id="nombre" value="nombre" th:field="*{nombre}"><br><br>
-        <input placeholder="Apellidos..." id="apellidos" value="apellidos" th:field="*{apellidos}"><br><br>
-        <input placeholder="Email..." id="email" value="email" th:field="*{email}"><br><br>
-        <input placeholder="Edad..." id="edad" value="edad" th:field="*{edad}"><br><br>
-        <input placeholder="Teléfono..." id="telefono" value="telefono" th:field="*{telefono}"><br><br>
-        <input placeholder="Fecha Estancia..." id="fechaEstancia" value="fechaEstancia" th:field="*{fechaEstancia}"><br><br>
-        <select placeholder="Motivo de visita..." id="motivoVisita" value="motivoVisita" th:field="*{motivoVisita}">
-            <option value="" disabled selected>Seleccionar motivo:</option>
+
+        <div th:if="${#fields.hasErrors('nombre')}" th:errors="*{nombre}">Nombre inválido</div>
+        <label for="nombre">Nombre:</label>
+        <input id="nombre" th:field="*{nombre}"><br><br>
+
+        <label for="apellidos">Apellidos:</label>
+        <input id="apellidos" th:field="*{apellidos}"><br><br>
+
+        <label for="email">Email:</label>
+        <input id="email" th:field="*{email}"><br><br>
+
+        <label for="edad">Edad:</label>
+        <input id="edad" th:field="*{edad}"><br><br>
+
+        <label for="telefono">Teléfono:</label>
+        <input id="telefono" th:field="*{telefono}"><br><br>
+
+        <label for="fechaEstancia">Fecha de inicio de estancia:</label>
+        <input id="fechaEstancia" th:field="*{fechaEstancia}"><br><br>
+
+        <label for="motivoVisita">Motivo de visita:</label>
+        <select id="motivoVisita" th:field="*{motivoVisita}">
+            <option value="" selected>Seleccionar motivo:</option>
+            <option value="trabajo">Trabajo</option>
+            <option value="estudios">Estudios</option>
+            <option value="turismo">Turismo</option>
+            <option value="otros">Otros</option>
         </select><br><br>
 
-        <!--<input type="checkbox" id="isRestaurante" value="isRestaurante" th:field="*{isRestaurante}"><br>
-        <input type="checkbox" id="isGimnasio" value="isGimnasio" th:field="*{isGimnasio}"><br>
-        <input type="checkbox" id="isSpa" value="isSpa" th:field="*{isSpa}"><br>
-        <input type="checkbox" id="isPiscina" value="isPiscina" th:field="*{isPiscina}"><br>
-        <input type="checkbox" id="isRoomservice" value="isRoomservice" th:field="*{isRoomservice}"><br>-->
+        <!--CHECKBOXES PARA SERVICIOS USADOS-->
+        <!--<label for="isRestaurante">Usó Restaurante:</label>
+        <input type="checkbox" id="isRestaurante" th:field="*{isRestaurante}"><br>
 
-        <input type="radio" value="Muy satisfecho" th:field="*{nivelSatisfaccion}"><br><br>
+        <label for="isGimnasio">Usó Gimnasio:</label>
+        <input type="checkbox" id="isGimnasio" th:field="*{isGimnasio}"><br>
+
+        <label for="isSpa">Usó Spa:</label>
+        <input type="checkbox" id="isSpa" th:field="*{isSpa}"><br>
+
+        <label for="isPiscina">Usó Piscina:</label>
+        <input type="checkbox" id="isPiscina" th:field="*{isPiscina}"><br>
+
+        <label for="isRoomservice">Usó Roomservice:</label>
+        <input type="checkbox" id="isRoomservice" th:field="*{isRoomservice}"><br>-->
+
+
+        <!--RADIOBUTTONS PARA EL NIVEL DE SATISFACCIÓN-->
+        <fieldset>
+            <legend>Nivel de satisfacción:</legend>
+            <label>
+                <input type="radio" value="Muy satisfecho" th:field="*{nivelSatisfaccion}"> Muy satisfecho
+            </label><br>
+            <label>
+                <input type="radio" value="Satisfecho" th:field="*{nivelSatisfaccion}"> Satisfecho
+            </label><br>
+            <label>
+                <input type="radio" value="Neutral" th:field="*{nivelSatisfaccion}"> Neutral
+            </label><br>
+            <label>
+                <input type="radio" value="Insatisfecho" th:field="*{nivelSatisfaccion}"> Insatisfecho
+            </label><br>
+            <label>
+                <input type="radio" value="Muy insatisfecho" th:field="*{nivelSatisfaccion}"> Muy insatisfecho
+            </label><br><br>
+        </fieldset>
+
+
+        <!--<input type="radio" value="Muy satisfecho" th:field="*{nivelSatisfaccion}"><br><br>
         <input type="radio" value="Satisfecho" th:field="*{nivelSatisfaccion}"><br><br>
         <input type="radio" value="Neutral" th:field="*{nivelSatisfaccion}"><br><br>
         <input type="radio" value="Insatisfecho" th:field="*{nivelSatisfaccion}"><br><br>
-        <input type="radio" value="Muy insatisfecho" th:field="*{nivelSatisfaccion}"><br><br>
+        <input type="radio" value="Muy insatisfecho" th:field="*{nivelSatisfaccion}"><br><br>-->
 
-        <textarea placeholder="Otro..." id="otrosComentarios" value="otrosComentarios" th:field="*{otrosComentarios}"></textarea><br><br>
+        <label for="otrosComentarios">Otros comentarios:</label>
+        <textarea id="otrosComentarios" th:field="*{otrosComentarios}"></textarea><br><br>
+
         <input type="submit" value="Enviar">
     </form>
 </body>

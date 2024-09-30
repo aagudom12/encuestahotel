@@ -3,6 +3,8 @@ package com.alfredo.encuestahotel.entity;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.*;
 
+import java.time.LocalDate;
+
 @Entity
 @Table(name = "encuestas")
 public class Encuesta {
@@ -30,18 +32,18 @@ public class Encuesta {
     @NotEmpty(message = "El teléfono no puede estar en blanco.")
     private String telefono;
 
-    @NotEmpty(message = "La fecha no puede estar en blanco.")
+    @NotNull(message = "La fecha no puede estar en blanco.")
     @PastOrPresent(message = "La fecha debe ser igual o anterior a la fecha de hoy.")
-    private String fechaEstancia;
+    private LocalDate fechaEstancia;
 
     @NotNull(message = "El motivo de visita es obligatorio.")
     private String motivoVisita;
 
-    private Boolean isRestaurante;
-    private Boolean isGimnasio;
-    private Boolean isSpa;
-    private Boolean isPiscina;
-    private Boolean isRoomservice;
+    private boolean isRestaurante;
+    private boolean isGimnasio;
+    private boolean isSpa;
+    private boolean isPiscina;
+    private boolean isRoomservice;
 
     @NotNull(message = "El nivel de satisfacción es obligatorio.")
     private String nivelSatisfaccion;
@@ -50,7 +52,7 @@ public class Encuesta {
     public Encuesta() {
     }
 
-    public Encuesta(Long idEncuesta, String nombre, String apellidos, String email, Integer edad, String telefono, String fechaEstancia, String motivoVisita, Boolean isRestaurante, Boolean isGimnasio, Boolean isSpa, Boolean isPiscina, Boolean isRoomservice, String nivelSatisfaccion, String otrosComentarios) {
+    public Encuesta(Long idEncuesta, String nombre, String apellidos, String email, Integer edad, String telefono, LocalDate fechaEstancia, String motivoVisita, Boolean isRestaurante, Boolean isGimnasio, Boolean isSpa, Boolean isPiscina, Boolean isRoomservice, String nivelSatisfaccion, String otrosComentarios) {
         this.idEncuesta = idEncuesta;
         this.nombre = nombre;
         this.apellidos = apellidos;
@@ -116,11 +118,11 @@ public class Encuesta {
         this.telefono = telefono;
     }
 
-    public String getFechaEstancia() {
+    public @NotEmpty(message = "La fecha no puede estar en blanco.") @PastOrPresent(message = "La fecha debe ser igual o anterior a la fecha de hoy.") LocalDate getFechaEstancia() {
         return fechaEstancia;
     }
 
-    public void setFechaEstancia(String fechaEstancia) {
+    public void setFechaEstancia(@NotEmpty(message = "La fecha no puede estar en blanco.") @PastOrPresent(message = "La fecha debe ser igual o anterior a la fecha de hoy.") LocalDate fechaEstancia) {
         this.fechaEstancia = fechaEstancia;
     }
 
@@ -132,43 +134,43 @@ public class Encuesta {
         this.motivoVisita = motivoVisita;
     }
 
-    public Boolean getRestaurante() {
+    public boolean isRestaurante() {
         return isRestaurante;
     }
 
-    public void setRestaurante(Boolean restaurante) {
+    public void setRestaurante(boolean restaurante) {
         isRestaurante = restaurante;
     }
 
-    public Boolean getGimnasio() {
+    public boolean isGimnasio() {
         return isGimnasio;
     }
 
-    public void setGimnasio(Boolean gimnasio) {
+    public void setGimnasio(boolean gimnasio) {
         isGimnasio = gimnasio;
     }
 
-    public Boolean getSpa() {
+    public boolean isSpa() {
         return isSpa;
     }
 
-    public void setSpa(Boolean spa) {
+    public void setSpa(boolean spa) {
         isSpa = spa;
     }
 
-    public Boolean getPiscina() {
+    public boolean isPiscina() {
         return isPiscina;
     }
 
-    public void setPiscina(Boolean piscina) {
+    public void setPiscina(boolean piscina) {
         isPiscina = piscina;
     }
 
-    public Boolean getRoomservice() {
+    public boolean isRoomservice() {
         return isRoomservice;
     }
 
-    public void setRoomservice(Boolean roomservice) {
+    public void setRoomservice(boolean roomservice) {
         isRoomservice = roomservice;
     }
 
