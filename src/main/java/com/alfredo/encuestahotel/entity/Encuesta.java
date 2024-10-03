@@ -11,7 +11,7 @@ public class Encuesta {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long idEncuesta;
+    private Long id;
 
     @NotEmpty (message = "El nombre no puede estar vacío.")
     @Size (min = 2, message = "El nombre debe de tener al menos 2 caracteres.")
@@ -36,24 +36,25 @@ public class Encuesta {
     @PastOrPresent(message = "La fecha debe ser igual o anterior a la fecha de hoy.")
     private LocalDate fechaEstancia;
 
-    @NotNull(message = "El motivo de visita es obligatorio.")
+    @NotEmpty(message = "El motivo de visita es obligatorio.")
     private String motivoVisita;
 
-    private boolean isRestaurante;
-    private boolean isGimnasio;
-    private boolean isSpa;
-    private boolean isPiscina;
-    private boolean isRoomservice;
+    private boolean restaurante;
+    private boolean gimnasio;
+    private boolean spa;
+    private boolean piscina;
+    private boolean roomservice;
 
     @NotNull(message = "El nivel de satisfacción es obligatorio.")
     private String nivelSatisfaccion;
+
     private String otrosComentarios;
 
     public Encuesta() {
     }
 
-    public Encuesta(Long idEncuesta, String nombre, String apellidos, String email, Integer edad, String telefono, LocalDate fechaEstancia, String motivoVisita, Boolean isRestaurante, Boolean isGimnasio, Boolean isSpa, Boolean isPiscina, Boolean isRoomservice, String nivelSatisfaccion, String otrosComentarios) {
-        this.idEncuesta = idEncuesta;
+    public Encuesta(Long id, String nombre, String apellidos, String email, Integer edad, String telefono, LocalDate fechaEstancia, String motivoVisita, boolean restaurante, boolean gimnasio, boolean spa, boolean piscina, boolean roomservice, String nivelSatisfaccion, String otrosComentarios) {
+        this.id = id;
         this.nombre = nombre;
         this.apellidos = apellidos;
         this.email = email;
@@ -61,21 +62,21 @@ public class Encuesta {
         this.telefono = telefono;
         this.fechaEstancia = fechaEstancia;
         this.motivoVisita = motivoVisita;
-        this.isRestaurante = isRestaurante;
-        this.isGimnasio = isGimnasio;
-        this.isSpa = isSpa;
-        this.isPiscina = isPiscina;
-        this.isRoomservice = isRoomservice;
+        this.restaurante = restaurante;
+        this.gimnasio = gimnasio;
+        this.spa = spa;
+        this.piscina = piscina;
+        this.roomservice = roomservice;
         this.nivelSatisfaccion = nivelSatisfaccion;
         this.otrosComentarios = otrosComentarios;
     }
 
-    public Long getIdEncuesta() {
-        return idEncuesta;
+    public Long getId() {
+        return id;
     }
 
-    public void setIdEncuesta(Long idEncuesta) {
-        this.idEncuesta = idEncuesta;
+    public void setId(Long id) {
+        this.id = id;
     }
 
     public String getNombre() {
@@ -118,11 +119,11 @@ public class Encuesta {
         this.telefono = telefono;
     }
 
-    public @NotEmpty(message = "La fecha no puede estar en blanco.") @PastOrPresent(message = "La fecha debe ser igual o anterior a la fecha de hoy.") LocalDate getFechaEstancia() {
+    public @NotNull(message = "La fecha no puede estar en blanco.") @PastOrPresent(message = "La fecha debe ser igual o anterior a la fecha de hoy.") LocalDate getFechaEstancia() {
         return fechaEstancia;
     }
 
-    public void setFechaEstancia(@NotEmpty(message = "La fecha no puede estar en blanco.") @PastOrPresent(message = "La fecha debe ser igual o anterior a la fecha de hoy.") LocalDate fechaEstancia) {
+    public void setFechaEstancia(@NotNull(message = "La fecha no puede estar en blanco.") @PastOrPresent(message = "La fecha debe ser igual o anterior a la fecha de hoy.") LocalDate fechaEstancia) {
         this.fechaEstancia = fechaEstancia;
     }
 
@@ -135,43 +136,43 @@ public class Encuesta {
     }
 
     public boolean isRestaurante() {
-        return isRestaurante;
+        return restaurante;
     }
 
     public void setRestaurante(boolean restaurante) {
-        isRestaurante = restaurante;
+        this.restaurante = restaurante;
     }
 
     public boolean isGimnasio() {
-        return isGimnasio;
+        return gimnasio;
     }
 
     public void setGimnasio(boolean gimnasio) {
-        isGimnasio = gimnasio;
+        this.gimnasio = gimnasio;
     }
 
     public boolean isSpa() {
-        return isSpa;
+        return spa;
     }
 
     public void setSpa(boolean spa) {
-        isSpa = spa;
+        this.spa = spa;
     }
 
     public boolean isPiscina() {
-        return isPiscina;
+        return piscina;
     }
 
     public void setPiscina(boolean piscina) {
-        isPiscina = piscina;
+        this.piscina = piscina;
     }
 
     public boolean isRoomservice() {
-        return isRoomservice;
+        return roomservice;
     }
 
     public void setRoomservice(boolean roomservice) {
-        isRoomservice = roomservice;
+        this.roomservice = roomservice;
     }
 
     public String getNivelSatisfaccion() {
@@ -193,19 +194,19 @@ public class Encuesta {
     @Override
     public String toString() {
         return "Encuesta{" +
-                "idEncuesta=" + idEncuesta +
+                "id=" + id +
                 ", nombre='" + nombre + '\'' +
                 ", apellidos='" + apellidos + '\'' +
                 ", email='" + email + '\'' +
                 ", edad=" + edad +
                 ", telefono='" + telefono + '\'' +
-                ", fechaEstancia='" + fechaEstancia + '\'' +
+                ", fechaEstancia=" + fechaEstancia +
                 ", motivoVisita='" + motivoVisita + '\'' +
-                ", isRestaurante=" + isRestaurante +
-                ", isGimnasio=" + isGimnasio +
-                ", isSpa=" + isSpa +
-                ", isPiscina=" + isPiscina +
-                ", isRoomservice=" + isRoomservice +
+                ", restaurante=" + restaurante +
+                ", gimnasio=" + gimnasio +
+                ", spa=" + spa +
+                ", piscina=" + piscina +
+                ", roomservice=" + roomservice +
                 ", nivelSatisfaccion='" + nivelSatisfaccion + '\'' +
                 ", otrosComentarios='" + otrosComentarios + '\'' +
                 '}';

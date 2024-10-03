@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Editar encuesta</title>
+</head>
+<body>
+<form th:action="@{/encuestas/edit/{id}(id=${encuesta.id})}" method="post" th:object="${encuesta}">
+
+    <div th:if="${#fields.hasErrors('nombre')}" th:errors="*{nombre}">Nombre inválido</div>
+    <label for="nombre">Nombre:</label>
+    <input id="nombre" th:field="*{nombre}"><br><br>
+
+    <div th:if="${#fields.hasErrors('apellidos')}" th:errors="*{apellidos}">Apellidos inválidos</div>
+    <label for="apellidos">Apellidos:</label>
+    <input id="apellidos" th:field="*{apellidos}"><br><br>
+
+    <div th:if="${#fields.hasErrors('email')}" th:errors="*{email}">Email inválido</div>
+    <label for="email">Email:</label>
+    <input id="email" th:field="*{email}"><br><br>
+
+    <div th:if="${#fields.hasErrors('edad')}" th:errors="*{edad}">Edad inválida</div>
+    <label for="edad">Edad:</label>
+    <input id="edad" th:field="*{edad}"><br><br>
+
+    <div th:if="${#fields.hasErrors('telefono')}" th:errors="*{telefono}">Teléfono inválido</div>
+    <label for="telefono">Teléfono:</label>
+    <input id="telefono" th:field="*{telefono}"><br><br>
+
+    <div th:if="${#fields.hasErrors('fechaEstancia')}" th:errors="*{fechaEstancia}">Fecha de Estancia inválida</div>
+    <label for="fechaEstancia">Fecha de inicio de estancia:</label>
+    <input id="fechaEstancia" th:field="*{fechaEstancia}"><br><br>
+
+    <div th:if="${#fields.hasErrors('motivoVisita')}" th:errors="*{motivoVisita}">Motivo de visita inválido</div>
+    <label for="motivoVisita">Motivo de visita:</label>
+    <select id="motivoVisita" th:field="*{motivoVisita}">
+        <option value="" selected>Seleccionar motivo:</option>
+        <option value="trabajo">Trabajo</option>
+        <option value="estudios">Estudios</option>
+        <option value="turismo">Turismo</option>
+        <option value="otros">Otros</option>
+    </select><br><br>
+
+    <!--CHECKBOXES PARA SERVICIOS USADOS-->
+    <label for="restaurante">Usó Restaurante:</label>
+    <input type="checkbox" id="restaurante" th:field="*{restaurante}"><br>
+
+    <label for="gimnasio">Usó Gimnasio:</label>
+    <input type="checkbox" id="gimnasio" th:field="*{gimnasio}"><br>
+
+    <label for="spa">Usó Spa:</label>
+    <input type="checkbox" id="spa" th:field="*{spa}"><br>
+
+    <label for="piscina">Usó Piscina:</label>
+    <input type="checkbox" id="piscina" th:field="*{piscina}"><br>
+
+    <label for="roomservice">Usó Roomservice:</label>
+    <input type="checkbox" id="roomservice" th:field="*{roomservice}"><br>
+
+
+    <!--RADIOBUTTONS PARA EL NIVEL DE SATISFACCIÓN-->
+    <div th:if="${#fields.hasErrors('nivelSatisfaccion')}" th:errors="*{nivelSatisfaccion}">Nivel de satisfacción inválido</div>
+    <fieldset>
+        <legend>Nivel de satisfacción:</legend>
+        <label>
+            <input type="radio" value="Muy satisfecho" th:field="*{nivelSatisfaccion}"> Muy satisfecho
+        </label><br>
+        <label>
+            <input type="radio" value="Satisfecho" th:field="*{nivelSatisfaccion}"> Satisfecho
+        </label><br>
+        <label>
+            <input type="radio" value="Neutral" th:field="*{nivelSatisfaccion}"> Neutral
+        </label><br>
+        <label>
+            <input type="radio" value="Insatisfecho" th:field="*{nivelSatisfaccion}"> Insatisfecho
+        </label><br>
+        <label>
+            <input type="radio" value="Muy insatisfecho" th:field="*{nivelSatisfaccion}"> Muy insatisfecho
+        </label><br><br>
+    </fieldset>
+
+    <label for="otrosComentarios">Otros comentarios:</label>
+    <textarea id="otrosComentarios" th:field="*{otrosComentarios}"></textarea><br><br>
+
+    <input type="submit" value="Enviar">
+</form>
+</body>
+</html>

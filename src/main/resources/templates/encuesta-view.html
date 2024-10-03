@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+  <h2 th:text="${encuesta.nombre}">Nombre</h2>
+  <p>Apellidos: <span th:text="${encuesta.nombre}"></span><br>
+    Email: <span th:text="${encuesta.email}"></span><br>
+    Edad: <span th:text="${encuesta.edad}"></span><br>
+    Teléfono: <span th:text="${encuesta.telefono}"></span><br>
+    Fecha de inicio de la estancia: <span th:text="${encuesta.fechaEstancia}"></span><br>
+    Motivo de la visita: <span th:text="${encuesta.motivoVisita}"></span><br>
+    <!--Servicios utilizados: <span th:text="${encuesta.}"></span><br>-->
+    Nivel de satisfacción general: <span th:text="${encuesta.nivelSatisfaccion}"></span><br>
+    Otros comentarios: <span th:text="${encuesta.otrosComentarios}"></span><br>
+
+    <a th:href="@{/encuestas}">Volver atrás</a>
+</body>
+</html>
