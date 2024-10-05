@@ -46,14 +46,14 @@ public class Encuesta {
     private boolean roomservice;
 
     @NotNull(message = "El nivel de satisfacción es obligatorio.")
-    private String nivelSatisfaccion;
+    private Integer nivelSatisfaccion;
 
     private String otrosComentarios;
 
     public Encuesta() {
     }
 
-    public Encuesta(Long id, String nombre, String apellidos, String email, Integer edad, String telefono, LocalDate fechaEstancia, String motivoVisita, boolean restaurante, boolean gimnasio, boolean spa, boolean piscina, boolean roomservice, String nivelSatisfaccion, String otrosComentarios) {
+    public Encuesta(Long id, String nombre, String apellidos, String email, Integer edad, String telefono, LocalDate fechaEstancia, String motivoVisita, boolean restaurante, boolean gimnasio, boolean spa, boolean piscina, boolean roomservice, Integer nivelSatisfaccion, String otrosComentarios) {
         this.id = id;
         this.nombre = nombre;
         this.apellidos = apellidos;
@@ -175,11 +175,11 @@ public class Encuesta {
         this.roomservice = roomservice;
     }
 
-    public String getNivelSatisfaccion() {
+    public @NotNull(message = "El nivel de satisfacción es obligatorio.") Integer getNivelSatisfaccion() {
         return nivelSatisfaccion;
     }
 
-    public void setNivelSatisfaccion(String nivelSatisfaccion) {
+    public void setNivelSatisfaccion(@NotNull(message = "El nivel de satisfacción es obligatorio.") Integer nivelSatisfaccion) {
         this.nivelSatisfaccion = nivelSatisfaccion;
     }
 

@@ -5,16 +5,19 @@
     <title>Listado de encuestas</title>
 </head>
 <body>
-    <p>Filtro</p>
-    <!--<form th:action="@{/encuestas}" method="post" th:object="${encuesta}">
-        <select th:field="*{encuesta.motivoVisita}">
-            <option value="" selected>Seleccionar motivo:</option>
-            <option value="trabajo">Trabajo</option>
-            <option value="estudios">Estudios</option>
-            <option value="turismo">Turismo</option>
-            <option value="otros">Otros</option>
-        </select><br><br>
-    </form>-->
+    <p>Filtro por nivel de satisfacción</p>
+    <!-- Formulario para filtrar encuestas -->
+    <form th:action="@{/encuestas/filter}" method="get">
+        <select name="nivelSatisfaccion">
+            <option value="">-- Selecciona un nivel --</option>
+            <option value="1">1 - Muy satisfecho</option>
+            <option value="2">2 - Satisfecho</option>
+            <option value="3">3 - Neutral</option>
+            <option value="4">4 - Insatisfecho</option>
+            <option value="5">5 - Muy insatisfecho</option>
+        </select>
+        <button type="submit">Filtrar</button>
+    </form>
 
     <p>Aquí irán las encuestas creadas</p>
     <div id="encuestas">
@@ -32,5 +35,17 @@
         </ul>
 
     </div>
+
+    <h2>Estadísticas</h2>
+    <p> Número total de encuestas: <span th:text="${numTotalEncuestas}"></span></p>
+    <p> Promedio de edades: <span th:text="${promedioEdad}"></span></p>
+    <h3>Distribución de Niveles de Satisfacción</h3>
+    <ul>
+        <li th:each="entry : ${distribucionPorcentajes}">
+            <span th:text="${entry.key}">Nivel</span>:
+            <span th:text="${entry.value} + '%'">Porcentaje</span>
+        </li>
+    </ul>
+
 </body>
 </html>
