@@ -134,7 +134,36 @@ public class EncuestaController {
             encuestas = encuestaRepository.findAll();
         }
 
+        long numTotalEncuestas = encuestaRepository.count();
+        double promedioEdad = encuestas.stream()
+                .mapToInt(Encuesta::getEdad)
+                .average()
+                .orElse(0.0);
+
+        Map<String, Long> distribucion = encuestas.stream()
+                .collect(Collectors.groupingBy(encuesta -> {
+                    switch (encuesta.getNivelSatisfaccion()) {
+                        case 1: return "1 - Muy satisfecho";
+                        case 2: return "2 - Satisfecho";
+                        case 3: return "3 - Neutral";
+                        case 4: return "4 - Insatisfecho";
+                        case 5: return "5 - Muy insatisfecho";
+                        default: return "Desconocido";
+                    }
+                }, Collectors.counting()));
+
+        long totalEncuestas = encuestas.size();
+        Map<String, Double> distribucionPorcentajes = distribucion.entrySet().stream()
+                .collect(Collectors.toMap(
+                        Map.Entry::getKey,
+                        entry -> (entry.getValue() * 100.0) / totalEncuestas
+                ));
+
         model.addAttribute("encuestas", encuestas);
+        model.addAttribute("numTotalEncuestas", numTotalEncuestas);
+        model.addAttribute("promedioEdad", promedioEdad);
+        model.addAttribute("distribucionPorcentajes", distribucionPorcentajes);
+
         return "encuesta-list";  // La misma vista que muestras la lista de encuestas
     }
 }

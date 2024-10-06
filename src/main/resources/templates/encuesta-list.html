@@ -2,50 +2,69 @@
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <title>Listado de encuestas</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Listado de Encuestas</title>
+    <!-- Incluir Bootstrap CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
 </head>
 <body>
-    <p>Filtro por nivel de satisfacción</p>
-    <!-- Formulario para filtrar encuestas -->
-    <form th:action="@{/encuestas/filter}" method="get">
-        <select name="nivelSatisfaccion">
-            <option value="">-- Selecciona un nivel --</option>
-            <option value="1">1 - Muy satisfecho</option>
-            <option value="2">2 - Satisfecho</option>
-            <option value="3">3 - Neutral</option>
-            <option value="4">4 - Insatisfecho</option>
-            <option value="5">5 - Muy insatisfecho</option>
-        </select>
-        <button type="submit">Filtrar</button>
-    </form>
+<div class="container mt-5">
+    <h1 class="mb-4">Listado de Encuestas</h1>
 
-    <p>Aquí irán las encuestas creadas</p>
-    <div id="encuestas">
-        <p th:if="${#lists.isEmpty(encuestas)}">No hay encuestas.</p>
-
-        <ul>
-            <li th:each="encuesta: ${encuestas}">
-                <p th:text="${encuesta.nombre}"></p>
-                <p th:text="${encuesta.fechaEstancia}"></p>
-                <p th:text="${encuesta.nivelSatisfaccion}"></p>
-                <a th:href="@{/encuestas/view/{id}(id=${encuesta.id})}">ver</a>
-                <a th:href="@{/encuestas/del/{id}(id=${encuesta.id})}">borrar</a>
-                <a th:href="@{/encuestas/edit/{id}(id=${encuesta.id})}">editar</a>
-            </li>
-        </ul>
-
+    <!-- Filtro por nivel de satisfacción -->
+    <div class="mb-4">
+        <form th:action="@{/encuestas/filter}" method="get" class="form-inline">
+            <label for="nivelSatisfaccion" class="mr-2">Filtro por nivel de satisfacción:</label>
+            <select name="nivelSatisfaccion" id="nivelSatisfaccion" class="form-control mr-2">
+                <option value="">-- Selecciona un nivel --</option>
+                <option value="1">1 - Muy satisfecho</option>
+                <option value="2">2 - Satisfecho</option>
+                <option value="3">3 - Neutral</option>
+                <option value="4">4 - Insatisfecho</option>
+                <option value="5">5 - Muy insatisfecho</option>
+            </select>
+            <button type="submit" class="btn btn-primary">Filtrar</button>
+        </form>
     </div>
 
-    <h2>Estadísticas</h2>
-    <p> Número total de encuestas: <span th:text="${numTotalEncuestas}"></span></p>
-    <p> Promedio de edades: <span th:text="${promedioEdad}"></span></p>
-    <h3>Distribución de Niveles de Satisfacción</h3>
-    <ul>
-        <li th:each="entry : ${distribucionPorcentajes}">
-            <span th:text="${entry.key}">Nivel</span>:
-            <span th:text="${entry.value} + '%'">Porcentaje</span>
-        </li>
-    </ul>
+    <!-- Listado de encuestas -->
+    <div id="encuestas">
+        <p th:if="${#lists.isEmpty(encuestas)}" class="alert alert-warning">No hay encuestas.</p>
 
+        <ul class="list-group">
+            <li th:each="encuesta : ${encuestas}" class="list-group-item">
+                <h5 th:text="${encuesta.nombre}">Nombre</h5>
+                <p><strong>Fecha de estancia:</strong> <span th:text="${encuesta.fechaEstancia}"></span></p>
+                <p><strong>Nivel de satisfacción:</strong> <span th:text="${encuesta.nivelSatisfaccion}"></span></p>
+
+                <div class="btn-group">
+                    <a th:href="@{/encuestas/view/{id}(id=${encuesta.id})}" class="btn btn-info btn-sm">Ver</a>
+                    <a th:href="@{/encuestas/edit/{id}(id=${encuesta.id})}" class="btn btn-warning btn-sm">Editar</a>
+                    <a th:href="@{/encuestas/del/{id}(id=${encuesta.id})}" class="btn btn-danger btn-sm">Borrar</a>
+                </div>
+            </li>
+        </ul>
+    </div>
+
+    <!-- Estadísticas -->
+    <div class="mt-5">
+        <h2>Estadísticas</h2>
+        <p><strong>Número total de encuestas:</strong> <span th:text="${numTotalEncuestas}"></span></p>
+        <p><strong>Promedio de edades:</strong> <span th:text="${promedioEdad}"></span></p>
+
+        <h3>Distribución de Niveles de Satisfacción</h3>
+        <ul class="list-group">
+            <li th:each="entry : ${distribucionPorcentajes}" class="list-group-item">
+                <span th:text="${entry.key}">Nivel</span>:
+                <span th:text="${entry.value} + '%'">Porcentaje</span>
+            </li>
+        </ul>
+    </div>
+</div>
+
+<!-- Incluir Bootstrap JS y jQuery -->
+<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.3/dist/umd/popper.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 </body>
 </html>

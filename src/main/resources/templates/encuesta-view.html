@@ -1,21 +1,35 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
-    <meta charset="UTF-8">
-    <title>Title</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Detalles de la Encuesta</title>
+  <!-- Incluir Bootstrap CSS -->
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
 </head>
 <body>
-  <h2 th:text="${encuesta.nombre}">Nombre</h2>
-  <p>Apellidos: <span th:text="${encuesta.nombre}"></span><br>
-    Email: <span th:text="${encuesta.email}"></span><br>
-    Edad: <span th:text="${encuesta.edad}"></span><br>
-    Teléfono: <span th:text="${encuesta.telefono}"></span><br>
-    Fecha de inicio de la estancia: <span th:text="${encuesta.fechaEstancia}"></span><br>
-    Motivo de la visita: <span th:text="${encuesta.motivoVisita}"></span><br>
-    <!--Servicios utilizados: <span th:text="${encuesta.}"></span><br>-->
-    Nivel de satisfacción general: <span th:text="${encuesta.nivelSatisfaccion}"></span><br>
-    Otros comentarios: <span th:text="${encuesta.otrosComentarios}"></span><br>
+<div class="container mt-5">
+  <h2 class="mb-4" th:text="${encuesta.nombre}">Nombre</h2>
 
-    <a th:href="@{/encuestas}">Volver atrás</a>
+  <div class="card p-4">
+    <p><strong>Apellidos:</strong> <span th:text="${encuesta.apellidos}"></span></p>
+    <p><strong>Email:</strong> <span th:text="${encuesta.email}"></span></p>
+    <p><strong>Edad:</strong> <span th:text="${encuesta.edad}"></span></p>
+    <p><strong>Teléfono:</strong> <span th:text="${encuesta.telefono}"></span></p>
+    <p><strong>Fecha de inicio de la estancia:</strong> <span th:text="${encuesta.fechaEstancia}"></span></p>
+    <p><strong>Motivo de la visita:</strong> <span th:text="${encuesta.motivoVisita}"></span></p>
+    <p><strong>Nivel de satisfacción general:</strong> <span th:text="${encuesta.nivelSatisfaccion}"></span></p>
+    <p><strong>Otros comentarios:</strong> <span th:text="${encuesta.otrosComentarios}"></span></p>
+  </div>
+
+  <div class="mt-4">
+    <a th:href="@{/encuestas}" class="btn btn-secondary">Volver atrás</a>
+  </div>
+</div>
+
+<!-- Incluir Bootstrap JS y jQuery -->
+<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.3/dist/umd/popper.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 </body>
 </html>

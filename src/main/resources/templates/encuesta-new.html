@@ -2,87 +2,126 @@
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <title>Nueva encuesta</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Nueva Encuesta</title>
+    <!-- Incluir Bootstrap CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
 </head>
 <body>
+<div class="container mt-5">
+    <h2>Nueva Encuesta</h2>
     <form th:action="@{/encuestas/new}" method="post" th:object="${encuesta}">
+        <div class="form-group">
+            <div th:if="${#fields.hasErrors('nombre')}" class="text-danger" th:errors="*{nombre}">Nombre inválido</div>
+            <label for="nombre">Nombre:</label>
+            <input id="nombre" th:field="*{nombre}" class="form-control" placeholder="Ingresa tu nombre">
+        </div>
 
-        <div th:if="${#fields.hasErrors('nombre')}" th:errors="*{nombre}">Nombre inválido</div>
-        <label for="nombre">Nombre:</label>
-        <input id="nombre" th:field="*{nombre}"><br><br>
+        <div class="form-group">
+            <div th:if="${#fields.hasErrors('apellidos')}" class="text-danger" th:errors="*{apellidos}">Apellidos inválidos</div>
+            <label for="apellidos">Apellidos:</label>
+            <input id="apellidos" th:field="*{apellidos}" class="form-control" placeholder="Ingresa tus apellidos">
+        </div>
 
-        <div th:if="${#fields.hasErrors('apellidos')}" th:errors="*{apellidos}">Apellidos inválidos</div>
-        <label for="apellidos">Apellidos:</label>
-        <input id="apellidos" th:field="*{apellidos}"><br><br>
+        <div class="form-group">
+            <div th:if="${#fields.hasErrors('email')}" class="text-danger" th:errors="*{email}">Email inválido</div>
+            <label for="email">Email:</label>
+            <input id="email" th:field="*{email}" class="form-control" placeholder="Ingresa tu email">
+        </div>
 
-        <div th:if="${#fields.hasErrors('email')}" th:errors="*{email}">Email inválido</div>
-        <label for="email">Email:</label>
-        <input id="email" th:field="*{email}"><br><br>
+        <div class="form-group">
+            <div th:if="${#fields.hasErrors('edad')}" class="text-danger" th:errors="*{edad}">Edad inválida</div>
+            <label for="edad">Edad:</label>
+            <input id="edad" th:field="*{edad}" class="form-control" placeholder="Ingresa tu edad">
+        </div>
 
-        <div th:if="${#fields.hasErrors('edad')}" th:errors="*{edad}">Edad inválida</div>
-        <label for="edad">Edad:</label>
-        <input id="edad" th:field="*{edad}"><br><br>
+        <div class="form-group">
+            <div th:if="${#fields.hasErrors('telefono')}" class="text-danger" th:errors="*{telefono}">Teléfono inválido</div>
+            <label for="telefono">Teléfono:</label>
+            <input id="telefono" th:field="*{telefono}" class="form-control" placeholder="Ingresa tu teléfono">
+        </div>
 
-        <div th:if="${#fields.hasErrors('telefono')}" th:errors="*{telefono}">Teléfono inválido</div>
-        <label for="telefono">Teléfono:</label>
-        <input id="telefono" th:field="*{telefono}"><br><br>
+        <div class="form-group">
+            <div th:if="${#fields.hasErrors('fechaEstancia')}" class="text-danger" th:errors="*{fechaEstancia}">Fecha de Estancia inválida</div>
+            <label for="fechaEstancia">Fecha de inicio de estancia:</label>
+            <input id="fechaEstancia" th:field="*{fechaEstancia}" class="form-control" placeholder="Ingresa la fecha de inicio">
+        </div>
 
-        <div th:if="${#fields.hasErrors('fechaEstancia')}" th:errors="*{fechaEstancia}">Fecha de Estancia inválida</div>
-        <label for="fechaEstancia">Fecha de inicio de estancia:</label>
-        <input id="fechaEstancia" th:field="*{fechaEstancia}"><br><br>
+        <div class="form-group">
+            <div th:if="${#fields.hasErrors('motivoVisita')}" class="text-danger" th:errors="*{motivoVisita}">Motivo de visita inválido</div>
+            <label for="motivoVisita">Motivo de visita:</label>
+            <select id="motivoVisita" th:field="*{motivoVisita}" class="form-control">
+                <option value="" selected>Seleccionar motivo:</option>
+                <option value="trabajo">Trabajo</option>
+                <option value="estudios">Estudios</option>
+                <option value="turismo">Turismo</option>
+                <option value="otros">Otros</option>
+            </select>
+        </div>
 
-        <div th:if="${#fields.hasErrors('motivoVisita')}" th:errors="*{motivoVisita}">Motivo de visita inválido</div>
-        <label for="motivoVisita">Motivo de visita:</label>
-        <select id="motivoVisita" th:field="*{motivoVisita}">
-            <option value="" selected>Seleccionar motivo:</option>
-            <option value="trabajo">Trabajo</option>
-            <option value="estudios">Estudios</option>
-            <option value="turismo">Turismo</option>
-            <option value="otros">Otros</option>
-        </select><br><br>
-
-        <!--CHECKBOXES PARA SERVICIOS USADOS-->
-        <label for="restaurante">Usó Restaurante:</label>
-        <input type="checkbox" id="restaurante" th:field="*{restaurante}"><br>
-
-        <label for="gimnasio">Usó Gimnasio:</label>
-        <input type="checkbox" id="gimnasio" th:field="*{gimnasio}"><br>
-
-        <label for="spa">Usó Spa:</label>
-        <input type="checkbox" id="spa" th:field="*{spa}"><br>
-
-        <label for="piscina">Usó Piscina:</label>
-        <input type="checkbox" id="piscina" th:field="*{piscina}"><br>
-
-        <label for="roomservice">Usó Roomservice:</label>
-        <input type="checkbox" id="roomservice" th:field="*{roomservice}"><br>
-
-
-        <!--RADIOBUTTONS PARA EL NIVEL DE SATISFACCIÓN-->
-        <div th:if="${#fields.hasErrors('nivelSatisfaccion')}" th:errors="*{nivelSatisfaccion}">Nivel de satisfacción inválido</div>
-        <fieldset>
-            <legend>Nivel de satisfacción:</legend>
-            <label>
-                <input type="radio" value="1" th:field="*{nivelSatisfaccion}"> Muy satisfecho
-            </label><br>
-            <label>
-                <input type="radio" value="2" th:field="*{nivelSatisfaccion}"> Satisfecho
-            </label><br>
-            <label>
-                <input type="radio" value="3" th:field="*{nivelSatisfaccion}"> Neutral
-            </label><br>
-            <label>
-                <input type="radio" value="4" th:field="*{nivelSatisfaccion}"> Insatisfecho
-            </label><br>
-            <label>
-                <input type="radio" value="5" th:field="*{nivelSatisfaccion}"> Muy insatisfecho
-            </label><br><br>
+        <fieldset class="form-group">
+            <legend>Servicios utilizados:</legend>
+            <div class="form-check">
+                <input type="checkbox" id="restaurante" th:field="*{restaurante}" class="form-check-input">
+                <label for="restaurante" class="form-check-label">Usó Restaurante</label>
+            </div>
+            <div class="form-check">
+                <input type="checkbox" id="gimnasio" th:field="*{gimnasio}" class="form-check-input">
+                <label for="gimnasio" class="form-check-label">Usó Gimnasio</label>
+            </div>
+            <div class="form-check">
+                <input type="checkbox" id="spa" th:field="*{spa}" class="form-check-input">
+                <label for="spa" class="form-check-label">Usó Spa</label>
+            </div>
+            <div class="form-check">
+                <input type="checkbox" id="piscina" th:field="*{piscina}" class="form-check-input">
+                <label for="piscina" class="form-check-label">Usó Piscina</label>
+            </div>
+            <div class="form-check">
+                <input type="checkbox" id="roomservice" th:field="*{roomservice}" class="form-check-input">
+                <label for="roomservice" class="form-check-label">Usó Roomservice</label>
+            </div>
         </fieldset>
 
-        <label for="otrosComentarios">Otros comentarios:</label>
-        <textarea id="otrosComentarios" th:field="*{otrosComentarios}"></textarea><br><br>
+        <div class="form-group">
+            <div th:if="${#fields.hasErrors('nivelSatisfaccion')}" class="text-danger" th:errors="*{nivelSatisfaccion}">Nivel de satisfacción inválido</div>
+            <fieldset>
+                <legend>Nivel de satisfacción:</legend>
+                <div class="form-check">
+                    <input type="radio" value="1" th:field="*{nivelSatisfaccion}" class="form-check-input" id="satisfecho1">
+                    <label for="satisfecho1" class="form-check-label">Muy satisfecho</label>
+                </div>
+                <div class="form-check">
+                    <input type="radio" value="2" th:field="*{nivelSatisfaccion}" class="form-check-input" id="satisfecho2">
+                    <label for="satisfecho2" class="form-check-label">Satisfecho</label>
+                </div>
+                <div class="form-check">
+                    <input type="radio" value="3" th:field="*{nivelSatisfaccion}" class="form-check-input" id="satisfecho3">
+                    <label for="satisfecho3" class="form-check-label">Neutral</label>
+                </div>
+                <div class="form-check">
+                    <input type="radio" value="4" th:field="*{nivelSatisfaccion}" class="form-check-input" id="satisfecho4">
+                    <label for="satisfecho4" class="form-check-label">Insatisfecho</label>
+                </div>
+                <div class="form-check">
+                    <input type="radio" value="5" th:field="*{nivelSatisfaccion}" class="form-check-input" id="satisfecho5">
+                    <label for="satisfecho5" class="form-check-label">Muy insatisfecho</label>
+                </div>
+            </fieldset>
+        </div>
 
-        <input type="submit" value="Enviar">
+        <div class="form-group">
+            <label for="otrosComentarios">Otros comentarios:</label>
+            <textarea id="otrosComentarios" th:field="*{otrosComentarios}" class="form-control" placeholder="Ingresa tus comentarios"></textarea>
+        </div>
+
+        <button type="submit" class="btn btn-primary">Enviar</button>
     </form>
+</div>
+
+<!-- Incluir Bootstrap JS y jQuery -->
+<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.3/dist/umd/popper.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 </body>
 </html>
