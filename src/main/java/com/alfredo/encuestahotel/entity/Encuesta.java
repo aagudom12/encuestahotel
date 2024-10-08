@@ -5,6 +5,7 @@ import jakarta.validation.constraints.*;
 
 import java.time.LocalDate;
 
+//Entidad con los atributos y validaciones requeridos según la tarea
 @Entity
 @Table(name = "encuestas")
 public class Encuesta {

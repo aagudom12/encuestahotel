@@ -6,6 +6,7 @@ import org.springframework.stereotype.Repository;
 
 import java.util.List;
 
+//Repositorio que se encargará de realizar los cambios en la bd mediante el JPA
 @Repository
 public interface EncuestaRepository extends JpaRepository<Encuesta,Long> {
     // Encuestas filtradas por nivel de satisfacción
