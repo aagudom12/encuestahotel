@@ -50,13 +50,13 @@
     <div class="mt-5">
         <h2>Estadísticas</h2>
         <p><strong>Número total de encuestas:</strong> <span th:text="${numTotalEncuestas}"></span></p>
-        <p><strong>Promedio de edades:</strong> <span th:text="${promedioEdad}"></span></p>
+        <p><strong>Promedio de edades:</strong> <span th:text="${#numbers.formatDecimal(promedioEdad, 1, 2)}"></span></p>
 
         <h3>Distribución de Niveles de Satisfacción</h3>
         <ul class="list-group">
             <li th:each="entry : ${distribucionPorcentajes}" class="list-group-item">
                 <span th:text="${entry.key}">Nivel</span>:
-                <span th:text="${entry.value} + '%'">Porcentaje</span>
+                <span th:text="${#numbers.formatDecimal(entry.value, 1, 2)} + '%'">Porcentaje</span>
             </li>
         </ul>
     </div>
