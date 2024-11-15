@@ -6,6 +6,11 @@
     <title>Listado de Encuestas</title>
     <!-- Incluir Bootstrap CSS -->
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <style>
+        .mt-5{
+            padding-bottom: 2%;
+        }
+    </style>
 </head>
 <body>
 <div class="container mt-5">
@@ -45,6 +50,8 @@
             </li>
         </ul>
     </div>
+
+    <a th:href="@{/encuestas/new}" class="btn btn-success mt-3">Añadir nueva encuesta</a>
 
     <!-- Estadísticas -->
     <div class="mt-5">

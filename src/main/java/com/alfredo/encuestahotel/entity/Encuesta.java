@@ -2,10 +2,19 @@ package com.alfredo.encuestahotel.entity;
 
 import jakarta.persistence.*;
 import jakarta.validation.constraints.*;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import java.time.LocalDate;
 
-//Entidad con los atributos y validaciones requeridos según la tarea
+//Anotaciones de LomBok
+@Data
+@NoArgsConstructor
+@AllArgsConstructor
+@Builder
+
 @Entity
 @Table(name = "encuestas")
 public class Encuesta {
@@ -51,165 +60,4 @@ public class Encuesta {
 
     private String otrosComentarios;
 
-    public Encuesta() {
-    }
-
-    public Encuesta(Long id, String nombre, String apellidos, String email, Integer edad, String telefono, LocalDate fechaEstancia, String motivoVisita, boolean restaurante, boolean gimnasio, boolean spa, boolean piscina, boolean roomservice, Integer nivelSatisfaccion, String otrosComentarios) {
-        this.id = id;
-        this.nombre = nombre;
-        this.apellidos = apellidos;
-        this.email = email;
-        this.edad = edad;
-        this.telefono = telefono;
-        this.fechaEstancia = fechaEstancia;
-        this.motivoVisita = motivoVisita;
-        this.restaurante = restaurante;
-        this.gimnasio = gimnasio;
-        this.spa = spa;
-        this.piscina = piscina;
-        this.roomservice = roomservice;
-        this.nivelSatisfaccion = nivelSatisfaccion;
-        this.otrosComentarios = otrosComentarios;
-    }
-
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
-
-    public String getNombre() {
-        return nombre;
-    }
-
-    public void setNombre(String nombre) {
-        this.nombre = nombre;
-    }
-
-    public String getApellidos() {
-        return apellidos;
-    }
-
-    public void setApellidos(String apellidos) {
-        this.apellidos = apellidos;
-    }
-
-    public String getEmail() {
-        return email;
-    }
-
-    public void setEmail(String email) {
-        this.email = email;
-    }
-
-    public Integer getEdad() {
-        return edad;
-    }
-
-    public void setEdad(Integer edad) {
-        this.edad = edad;
-    }
-
-    public String getTelefono() {
-        return telefono;
-    }
-
-    public void setTelefono(String telefono) {
-        this.telefono = telefono;
-    }
-
-    public @NotNull(message = "La fecha no puede estar en blanco.") @PastOrPresent(message = "La fecha debe ser igual o anterior a la fecha de hoy.") LocalDate getFechaEstancia() {
-        return fechaEstancia;
-    }
-
-    public void setFechaEstancia(@NotNull(message = "La fecha no puede estar en blanco.") @PastOrPresent(message = "La fecha debe ser igual o anterior a la fecha de hoy.") LocalDate fechaEstancia) {
-        this.fechaEstancia = fechaEstancia;
-    }
-
-    public String getMotivoVisita() {
-        return motivoVisita;
-    }
-
-    public void setMotivoVisita(String motivoVisita) {
-        this.motivoVisita = motivoVisita;
-    }
-
-    public boolean isRestaurante() {
-        return restaurante;
-    }
-
-    public void setRestaurante(boolean restaurante) {
-        this.restaurante = restaurante;
-    }
-
-    public boolean isGimnasio() {
-        return gimnasio;
-    }
-
-    public void setGimnasio(boolean gimnasio) {
-        this.gimnasio = gimnasio;
-    }
-
-    public boolean isSpa() {
-        return spa;
-    }
-
-    public void setSpa(boolean spa) {
-        this.spa = spa;
-    }
-
-    public boolean isPiscina() {
-        return piscina;
-    }
-
-    public void setPiscina(boolean piscina) {
-        this.piscina = piscina;
-    }
-
-    public boolean isRoomservice() {
-        return roomservice;
-    }
-
-    public void setRoomservice(boolean roomservice) {
-        this.roomservice = roomservice;
-    }
-
-    public @NotNull(message = "El nivel de satisfacción es obligatorio.") Integer getNivelSatisfaccion() {
-        return nivelSatisfaccion;
-    }
-
-    public void setNivelSatisfaccion(@NotNull(message = "El nivel de satisfacción es obligatorio.") Integer nivelSatisfaccion) {
-        this.nivelSatisfaccion = nivelSatisfaccion;
-    }
-
-    public String getOtrosComentarios() {
-        return otrosComentarios;
-    }
-
-    public void setOtrosComentarios(String otrosComentarios) {
-        this.otrosComentarios = otrosComentarios;
-    }
-
-    @Override
-    public String toString() {
-        return "Encuesta{" +
-                "id=" + id +
-                ", nombre='" + nombre + '\'' +
-                ", apellidos='" + apellidos + '\'' +
-                ", email='" + email + '\'' +
-                ", edad=" + edad +
-                ", telefono='" + telefono + '\'' +
-                ", fechaEstancia=" + fechaEstancia +
-                ", motivoVisita='" + motivoVisita + '\'' +
-                ", restaurante=" + restaurante +
-                ", gimnasio=" + gimnasio +
-                ", spa=" + spa +
-                ", piscina=" + piscina +
-                ", roomservice=" + roomservice +
-                ", nivelSatisfaccion='" + nivelSatisfaccion + '\'' +
-                ", otrosComentarios='" + otrosComentarios + '\'' +
-                '}';
-    }
 }
