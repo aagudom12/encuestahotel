@@ -60,4 +60,7 @@ public class Encuesta {
 
     private String otrosComentarios;
 
+    @ManyToOne(targetEntity = Usuario.class, optional = false)
+    @JoinColumn(name = "usuario_id", nullable = false)
+    private Usuario usuario;
 }

@@ -1,8 +1,12 @@
 package com.alfredo.encuestahotel.controller;
 
 import com.alfredo.encuestahotel.entity.Encuesta;
+import com.alfredo.encuestahotel.entity.Usuario;
 import com.alfredo.encuestahotel.repository.EncuestaRepository;
+import com.alfredo.encuestahotel.service.CustomUserDetailsService;
+import com.alfredo.encuestahotel.service.EncuestaService;
 import jakarta.validation.Valid;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -11,6 +15,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import java.security.Principal;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
@@ -19,23 +24,32 @@ import java.util.stream.Collectors;
 @Controller
 public class EncuestaController {
 
+    private EncuestaService encuestaService;
+    private CustomUserDetailsService usuarioService;
+
+    @Autowired
+    public EncuestaController(EncuestaService encuestaService, CustomUserDetailsService usuarioService) {
+        this.encuestaService = encuestaService;
+        this.usuarioService = usuarioService;
+    }
+
     //Repositorio con el que accederemos a los datos de la bd y realizaremos las distintas acciones
-    private EncuestaRepository encuestaRepository;
+    //private EncuestaRepository encuestaRepository;
 
     //Es necesario crearle un constructor para poder inicializarlo y trabajar con él
     //Otra opción, es poner la anotación @Autowired sobre el repositorio
-    public EncuestaController(EncuestaRepository encuestaRepository) {
+    /*public EncuestaController(EncuestaRepository encuestaRepository) {
         this.encuestaRepository = encuestaRepository;
-    }
+    }*/
 
     //Se define la ruta en la que mostraremos el listado de encuestas
     //Estas se obtendrán mediante un get a las encuestras creadas en la bd de H2
     @GetMapping("/encuestas")
     public String index(Model model){
-        List<Encuesta> encuestas = encuestaRepository.findAll();
+        List<Encuesta> encuestas = encuestaService.obtenerEncuestas();
 
         //Creamos una variable para al almacenar el nº de encuestas existentes en la bd y luego mostrarlo en las stats
-        long numTotalEncuestas = encuestaRepository.count();
+        long numTotalEncuestas = encuestaService.obtenerCantidadEncuestas();
 
         //Creamos otra variable para calcular el promedio de edad de los huespedes que han realizado encuestas
         /*Con stream permitimos que procese el listado de encuestas para realizar operaciones secuenciales
@@ -98,12 +112,21 @@ public class EncuestaController {
     //Y según lo que escriba el huesped, este objeto encuesta se guarda en el repositorio,
     // siguiendo unas validaciones para comprobar que la encuesta es válida
     @PostMapping("/encuestas/new")
-    public String newEncuestaInsertar(@Valid Encuesta encuesta, BindingResult bindingResult){
+    public String newEncuestaInsertar(@Valid Encuesta encuesta, BindingResult bindingResult, Principal principal){
         if(bindingResult.hasErrors()){
             return "encuesta-new";
         }
 
-        encuestaRepository.save(encuesta);
+        // Obtener el usuario autenticado
+        String emailUsuario = principal.getName();
+        Usuario usuario = usuarioService.comprobarUsuarioPorEmail(emailUsuario)
+                .orElseThrow(() -> new RuntimeException("Usuario no encontrado"));
+
+        // Asignar el usuario al anuncio
+        encuesta.setUsuario(usuario);
+        usuario.getEncuestas().add(encuesta);
+
+        encuestaService.guardarEncuesta(encuesta);
 
         return "encuesta-completed";
     }
@@ -111,7 +134,7 @@ public class EncuestaController {
     //Desde esta ruta, obtendremos los valores de la encuesta según el id y si este existe en la bd, lo visualizaremos
     @GetMapping("/encuestas/view/{id}")
     public String view(@PathVariable Long id, Model model ){
-        Optional<Encuesta> encuesta = encuestaRepository.findById(id);
+        Optional<Encuesta> encuesta = encuestaService.obtenerEncuestaPorId(id);
 
         if(encuesta.isPresent()){
             model.addAttribute("encuesta", encuesta.get());
@@ -123,9 +146,9 @@ public class EncuestaController {
     //Al pulsar el botón correspondiente con esta ruta, si existe el objeto en la bd, será eliminado
     @GetMapping("encuestas/del/{id}")
     public String delete(@PathVariable Long id, Model model){
-        Optional<Encuesta> encuesta = encuestaRepository.findById(id);
+        Optional<Encuesta> encuesta = encuestaService.obtenerEncuestaPorId(id);
         if(encuesta.isPresent()){
-            encuestaRepository.delete(encuesta.get());
+            encuestaService.eliminarEncuesta(id);
 
         }
         return "redirect:/encuestas";
@@ -135,7 +158,7 @@ public class EncuestaController {
     //los datos desde la bd y los mostrará si existe la encuesta.
     @GetMapping("/encuestas/edit/{id}")
     public String edit(@PathVariable Long id, Model model){
-        Optional<Encuesta> encuesta = encuestaRepository.findById(id);
+        Optional<Encuesta> encuesta = encuestaService.obtenerEncuestaPorId(id);
         if(encuesta.isPresent()){
             model.addAttribute("encuesta", encuesta.get());
             return "encuesta-edit";
@@ -149,7 +172,7 @@ public class EncuestaController {
         if(bindingResult.hasErrors()){
             return "encuesta-edit";
         }
-        encuestaRepository.save(encuesta);
+        encuestaService.guardarEncuesta(encuesta);
         return "redirect:/encuestas";
     }
 
@@ -161,16 +184,16 @@ public class EncuestaController {
 
         // Si el nivel de satisfacción está presente, se filtran las encuestas
         if (nivelSatisfaccion != null && nivelSatisfaccion > 0) {
-            encuestas = encuestaRepository.findByNivelSatisfaccion(nivelSatisfaccion);
+            encuestas = encuestaService.obtenerEncuestasPorNivelSatisfaccion(nivelSatisfaccion);
         } else {
             // Si no hay filtro, se muestran todas las encuestas
-            encuestas = encuestaRepository.findAll();
+            encuestas = encuestaService.obtenerEncuestas();
         }
 
         //He creado otra vez las estadisticas dentro de este controlador, ya que también me interesa
         //saberlas dentro de cada nivel de satisfacción. Aunque la distribución de porcentajes no tenga
         //sentido ya que siempre va a ser del 100% dentro del filtro
-        long numTotalEncuestas = encuestaRepository.count();
+        long numTotalEncuestas = encuestaService.obtenerCantidadEncuestas();
         double promedioEdad = encuestas.stream()
                 .mapToInt(Encuesta::getEdad)
                 .average()
@@ -201,5 +224,17 @@ public class EncuestaController {
         model.addAttribute("distribucionPorcentajes", distribucionPorcentajes);
 
         return "encuesta-list";
+    }
+
+    @GetMapping("/misEncuestas")
+    public String verMisAnuncios(Model model, Principal principal) {
+        String emailUsuario = principal.getName();
+        Usuario usuario = usuarioService.comprobarUsuarioPorEmail(emailUsuario)
+                .orElseThrow(() -> new RuntimeException("Usuario no encontrado"));
+
+        List<Encuesta> encuestas = encuestaService.obtenerAnunciosPorUsuario(usuario);
+        model.addAttribute("encuestas", encuestas);
+
+        return "encuesta-propias"; // vista para los anuncios del usuario
     }
 }

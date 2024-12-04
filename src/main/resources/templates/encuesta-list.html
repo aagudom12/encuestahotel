@@ -1,9 +1,11 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Listado de Encuestas</title>
+    <link th:href="@{/css/style.css}"  rel="stylesheet">
     <!-- Incluir Bootstrap CSS -->
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
     <style>
@@ -13,6 +15,49 @@
     </style>
 </head>
 <body>
+
+<header class="bg-primary text-white p-3 mb-4">
+    <div class="container">
+        <h1 class="mb-0">Listado de Encuestas</h1>
+        <nav class="mt-2">
+            <ul class="nav">
+                <li class="nav-item">
+                    <a class="nav-link text-white" th:href="@{/encuestas}">Encuestas</a>
+                </li>
+
+                <th:block sec:authorize="isAuthenticated()">
+                    <li class="nav-item">
+                        <a class="nav-link text-white" th:href="@{/misEncuestas}">Mis encuestas</a>
+                    </li>
+                </th:block>
+
+            </ul>
+            <div class="login-form">
+                <th:block sec:authorize="isAnonymous()">
+                    <ul class="nav">
+                        <li class="nav-item">
+                            <form th:action="@{/login}" method="post" class="d-flex align-items-center">
+                                <input type="text" name="username" placeholder="Username" class="form-control me-2" />
+                                <input type="password" name="password" placeholder="Password" class="form-control me-2" />
+                                <input type="submit" value="Log in" class="btn btn-primary" />
+                            </form>
+                        </li>
+                        <li class="nav-item">
+                            <a th:href="@{/nuevoUsuario}" class="btn btn-outline-light ms-3">Regístrate</a>
+                        </li>
+                    </ul>
+                </th:block>
+                <th:block sec:authorize="isAuthenticated()">
+                    <div>Bienvenido <span sec:authentication="name"></span>
+                        <a href="#" id="logoutEnlace" onclick="document.getElementById('formLogOut').submit()">Cerrar Sesión</a>
+                        <form th:action="@{/logout}" method="post" id="formLogOut"></form>
+                    </div>
+                </th:block>
+            </div>
+        </nav>
+    </div>
+</header>
+
 <div class="container mt-5">
     <h1 class="mb-4">Listado de Encuestas</h1>
 
@@ -67,6 +112,15 @@
             </li>
         </ul>
     </div>
+
+    <div th:if="${param.logout}">
+        <p>Has cerrado sesión correctamente.</p>
+    </div>
+
+    <!--<a th:href="@{/logout}">Cerrar sesión</a>-->
+    <!--<form th:action="@{/logout}" method="post">
+        <button type="submit" class="btn btn-danger">Cerrar sesión</button>
+    </form>-->
 </div>
 
 <!-- Incluir Bootstrap JS y jQuery -->

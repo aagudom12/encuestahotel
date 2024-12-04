@@ -1,0 +1,217 @@
+/* Estilos generales del nav */
+nav {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color: #007bff; /* Fondo azul del nav */
+    padding: 10px 20px;
+}
+
+/* Estilo para los enlaces del nav */
+.nav-link {
+    color: white !important; /* Asegura que el color del texto sea blanco */
+    text-decoration: none; /* Elimina subrayado */
+    padding: 10px 15px; /* Espaciado alrededor de los enlaces */
+    transition: all 0.3s ease; /* Transición suave para hover y active */
+}
+
+/* Hover: Cambio de color de fondo y texto */
+.nav-link:hover {
+    background-color: #0056b3; /* Fondo azul oscuro */
+    color: #f8d210; /* Color de texto amarillo */
+    border-radius: 5px; /* Bordes redondeados al hacer hover */
+}
+
+/* Active: Resalta el enlace activo */
+.nav-link.active {
+    background-color: #003366; /* Fondo azul muy oscuro */
+    color: #f8d210; /* Color amarillo */
+    font-weight: bold; /* Texto en negrita para resaltar */
+    border-radius: 5px;
+}
+
+/* Estilo para la parte del login-form */
+.login-form {
+    margin-left: auto;
+    display: flex;
+    align-items: center;
+}
+
+/* Ajustes del formulario */
+.login-form form {
+    display: flex;
+    gap: 10px;
+    align-items: center;
+}
+
+.login-form input[type="text"],
+.login-form input[type="password"] {
+    width: 150px;
+    padding: 5px;
+    font-size: 0.9rem;
+}
+
+.login-form input[type="submit"] {
+    padding: 5px 15px;
+    font-size: 0.9rem;
+    background-color: #007bff;
+    color: #fff;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+/* Hover para los botones de submit */
+.login-form input[type="submit"]:hover {
+    background-color: #0056b3;
+}
+
+/* Estilo para el enlace de cerrar sesión */
+#logoutEnlace {
+    color: #ffffff;
+    font-weight: bold;
+    text-decoration: none;
+    transition: color 0.3s ease, text-decoration 0.3s ease;
+}
+
+/* Hover en el enlace de logout */
+#logoutEnlace:hover {
+    color: #f8d210; /* Amarillo brillante al hacer hover */
+    text-decoration: underline;
+}
+
+/* Estilos para las tarjetas de productos */
+.card {
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    transition: box-shadow 0.3s ease;
+}
+
+.card:hover {
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2); /* Aumenta la sombra al pasar el cursor */
+}
+
+/* Estilos para los botones en las tarjetas */
+.btn-outline-danger,
+.btn-outline-primary {
+    border-radius: 20px;
+    font-size: 0.875rem;
+    padding: 8px 16px;
+    transition: background-color 0.3s, color 0.3s;
+}
+
+/* Hover en botones de las tarjetas */
+.btn-outline-danger:hover {
+    background-color: #dc3545;
+    color: white;
+}
+
+.btn-outline-primary:hover {
+    background-color: #007bff;
+    color: white;
+}
+
+/* Estilo para las imágenes de productos */
+.card-img-top {
+    height: 200px;
+    object-fit: cover;
+    border-top-left-radius: 8px;
+    border-top-right-radius: 8px;
+}
+
+/* Estilos de los contenedores de fotos */
+.foto-container {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    justify-content: center;
+}
+
+.foto {
+    width: 150px;
+    height: 100px;
+    background-size: cover;
+    background-position: center;
+    margin: 5px;
+    border: 1px solid #ccc;
+    position: relative;
+    transition: transform 0.3s ease;
+}
+
+.foto:hover {
+    transform: scale(1.05); /* Efecto de zoom suave al pasar el cursor */
+}
+
+/* Cruz de eliminación sobre las fotos */
+.cruz-delete-foto {
+    opacity: 0;
+    position: absolute;
+    font-size: 24px;
+    color: red;
+    text-decoration: none;
+    top: 5px;
+    right: 5px;
+    cursor: pointer;
+    transition: opacity 0.3s ease;
+}
+
+.foto:hover .cruz-delete-foto {
+    opacity: 1;
+}
+
+/* Contenedores de fotos en productos */
+.fotoProductoInsert {
+    width: 100px;
+    height: 100px;
+    border: 1px solid #333;
+    box-sizing: border-box;
+    background-color: #f0f0f0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    overflow: hidden;
+    position: relative;
+    transition: transform 0.3s ease;
+}
+
+.fotoProductoInsert:hover {
+    transform: scale(1.1);
+}
+
+/* Inputs de archivo */
+.file-input {
+    display: none;
+}
+
+.cruz-delete-foto {
+    opacity: 0;
+    position: absolute;
+    font-size: 80px;
+    color: black;
+    text-decoration: none;
+    text-align: center;
+    display: block;
+    height: 100%;
+    width: 100%;
+}
+
+.foto:hover .cruz-delete-foto {
+    opacity: 0.8;
+    border: 1px solid #333;
+    background-color: rgba(0, 0, 0, 0.4);
+}
+
+/* Estilos de los botones de acciones */
+.btn-secondary {
+    background-color: #007bff;
+    border-color: #0056b3;
+    transition: background-color 0.3s, border-color 0.3s;
+}
+
+.btn-secondary:hover {
+    background-color: #0056b3;
+    border-color: #003366;
+}

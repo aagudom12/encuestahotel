@@ -1,6 +1,7 @@
 package com.alfredo.encuestahotel.repository;
 
 import com.alfredo.encuestahotel.entity.Encuesta;
+import com.alfredo.encuestahotel.entity.Usuario;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
@@ -12,4 +13,5 @@ public interface EncuestaRepository extends JpaRepository<Encuesta,Long> {
     // Encuestas filtradas por nivel de satisfacción
     List<Encuesta> findByNivelSatisfaccion(Integer nivelSatisfaccion);
 
+    List<Encuesta> findByUsuario(Usuario usuario);
 }

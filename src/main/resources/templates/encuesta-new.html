@@ -26,7 +26,7 @@
         <div class="form-group">
             <div th:if="${#fields.hasErrors('email')}" class="text-danger" th:errors="*{email}">Email inválido</div>
             <label for="email">Email:</label>
-            <input id="email" th:field="*{email}" class="form-control" placeholder="Ingresa tu email">
+            <input type="email" id="email" th:field="*{email}" class="form-control" placeholder="Ingresa tu email">
         </div>
 
         <div class="form-group">
@@ -44,7 +44,7 @@
         <div class="form-group">
             <div th:if="${#fields.hasErrors('fechaEstancia')}" class="text-danger" th:errors="*{fechaEstancia}">Fecha de Estancia inválida</div>
             <label for="fechaEstancia">Fecha de inicio de estancia:</label>
-            <input id="fechaEstancia" th:field="*{fechaEstancia}" class="form-control" placeholder="Ingresa la fecha de inicio">
+            <input type="date" id="fechaEstancia" th:field="*{fechaEstancia}" class="form-control" placeholder="Ingresa la fecha de inicio">
         </div>
 
         <div class="form-group">
