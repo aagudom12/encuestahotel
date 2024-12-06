@@ -6,6 +6,11 @@
     <title>Nueva Encuesta</title>
     <!-- Incluir Bootstrap CSS -->
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <style>
+        .mt-4{
+            padding-bottom: 2%;
+        }
+    </style>
 </head>
 <body>
 <div class="container mt-5">
@@ -117,6 +122,10 @@
 
         <button type="submit" class="btn btn-primary">Enviar</button>
     </form>
+
+    <div class="mt-4">
+        <a th:href="@{/encuestas}" class="btn btn-secondary">Volver atrás</a>
+    </div>
 </div>
 
 <!-- Incluir Bootstrap JS y jQuery -->

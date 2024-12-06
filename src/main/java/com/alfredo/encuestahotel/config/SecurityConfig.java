@@ -31,8 +31,7 @@ public class SecurityConfig {
                 .authorizeHttpRequests(authorize -> authorize
                         .requestMatchers("/login", "/logout", "/nuevoUsuario", "/encuestas", "/encuestas/filter", "/encuestas/view/**").permitAll()
                         .requestMatchers("/usuarios", "/usuarios/**").hasRole("ADMIN")
-                        //.requestMatchers("/categorias/new").hasRole("USER")
-                        .anyRequest().authenticated()   /* Por ejemplo para la URL "/productos/new" habría que estar autenticado con cualquier ROL */
+                        .anyRequest().authenticated()
                 )
                 .formLogin(
                         form -> form
@@ -48,7 +47,7 @@ public class SecurityConfig {
                         .invalidateHttpSession(true) // Invalida la sesión
                         .deleteCookies("JSESSIONID") // Borra las cookies de sesión
                         .permitAll()
-                ) ;
+                );
 
 
         return http.build();
@@ -66,23 +65,4 @@ public class SecurityConfig {
         provider.setUserDetailsService(customUserDetailsService);
         return provider;
     }
-
-
-    /*@Bean
-    public UserDetailsService userDetailsService() {
-        UserDetails userDetails = User.withDefaultPasswordEncoder()
-                .username("user")
-                .password("user")
-                .roles("USER")
-                .build();
-
-        UserDetails userDetails2 = User.withDefaultPasswordEncoder()
-                .username("admin")
-                .password("admin")
-                .roles("ADMIN")
-                .build();
-
-        return new InMemoryUserDetailsManager(userDetails, userDetails2);
-    }*/
-
 }

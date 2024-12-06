@@ -34,17 +34,6 @@ public class EncuestaController {
         this.usuarioService = usuarioService;
     }
 
-    //Repositorio con el que accederemos a los datos de la bd y realizaremos las distintas acciones
-    //private EncuestaRepository encuestaRepository;
-
-    //Es necesario crearle un constructor para poder inicializarlo y trabajar con él
-    //Otra opción, es poner la anotación @Autowired sobre el repositorio
-    /*public EncuestaController(EncuestaRepository encuestaRepository) {
-        this.encuestaRepository = encuestaRepository;
-    }*/
-
-    //Se define la ruta en la que mostraremos el listado de encuestas
-    //Estas se obtendrán mediante un get a las encuestras creadas en la bd de H2
     @GetMapping("/encuestas")
     public String index(Model model){
         List<Encuesta> encuestas = encuestaService.obtenerEncuestas();
@@ -93,8 +82,6 @@ public class EncuestaController {
                         entry -> (entry.getValue() * 100.0) / totalEncuestas
                 ));
 
-        //Con el model, pasamos a la vista los datos obtenidos desde el controlador que a su vez, estos son
-        //obtenidos del repositorio
         model.addAttribute("encuestas", encuestas);
         model.addAttribute("numTotalEncuestas", numTotalEncuestas);
         model.addAttribute("promedioEdad", promedioEdad);
@@ -103,27 +90,22 @@ public class EncuestaController {
         return "encuesta-list";
     }
 
-    //Al acceder a esta ruta, se crea un nuevo objeto en blanco
     @GetMapping("/encuestas/new")
     public String newEncuesta(Model model){
         model.addAttribute("encuesta", new Encuesta());
         return "encuesta-new";
     }
 
-    //Y según lo que escriba el huesped, este objeto encuesta se guarda en el repositorio,
-    // siguiendo unas validaciones para comprobar que la encuesta es válida
     @PostMapping("/encuestas/new")
     public String newEncuestaInsertar(@Valid Encuesta encuesta, BindingResult bindingResult, Principal principal){
         if(bindingResult.hasErrors()){
             return "encuesta-new";
         }
 
-        // Obtener el usuario autenticado
         String emailUsuario = principal.getName();
         Usuario usuario = usuarioService.comprobarUsuarioPorEmail(emailUsuario)
                 .orElseThrow(() -> new RuntimeException("Usuario no encontrado"));
 
-        // Asignar el usuario al anuncio
         encuesta.setUsuario(usuario);
         usuario.getEncuestas().add(encuesta);
 
@@ -132,7 +114,6 @@ public class EncuestaController {
         return "encuesta-completed";
     }
 
-    //Desde esta ruta, obtendremos los valores de la encuesta según el id y si este existe en la bd, lo visualizaremos
     @GetMapping("/encuestas/view/{id}")
     public String view(@PathVariable Long id, Model model ){
         Optional<Encuesta> encuesta = encuestaService.obtenerEncuestaPorId(id);
@@ -144,20 +125,18 @@ public class EncuestaController {
         return "redirect:/encuestas";
     }
 
-    //Al pulsar el botón correspondiente con esta ruta, si existe el objeto en la bd, será eliminado
     @GetMapping("/encuestas/del/{id}")
     public String delete(@PathVariable Long id, Principal principal, RedirectAttributes redirectAttributes){
-        // Obtener el usuario autenticado
+
         String emailUsuario = principal.getName();
         Usuario usuario = usuarioService.comprobarUsuarioPorEmail(emailUsuario)
                 .orElseThrow(() -> new RuntimeException("Usuario no encontrado"));
 
-        // Verificar que el anuncio pertenece al usuario
+
         Encuesta encuesta = encuestaService.obtenerEncuestaPorId(id)
                 .orElseThrow(() -> new RuntimeException("Anuncio no encontrado"));
 
         if (!encuesta.getUsuario().getId().equals(usuario.getId())) {
-            // Añadir mensaje de error y redirigir
             redirectAttributes.addFlashAttribute("error", "No tienes permiso para eliminar esta encuesta.");
             return "redirect:/misEncuestas";
         }
@@ -167,8 +146,6 @@ public class EncuestaController {
         return "redirect:/encuestas";
     }
 
-    //Muy parecido al new, solo que al acceder a una encuesta ya existente, en vex de crearla, obtendrá
-    //los datos desde la bd y los mostrará si existe la encuesta.
     @GetMapping("/encuestas/edit/{id}")
     public String edit(@PathVariable Long id, Model model){
         Optional<Encuesta> encuesta = encuestaService.obtenerEncuestaPorId(id);
@@ -179,7 +156,6 @@ public class EncuestaController {
         return "redirect:/encuestas";
     }
 
-    //Funcionamiento muy parecido al de cuando se guarda la nueva encuesta
     @PostMapping("/encuestas/edit/{id}")
     public String confirmarEdit(@PathVariable Long id, @Valid Encuesta encuesta, BindingResult bindingResult, Principal principal, RedirectAttributes redirectAttributes){
         if(bindingResult.hasErrors()){
@@ -195,7 +171,6 @@ public class EncuestaController {
             return "redirect:/misEncuestas";
         }
 
-        // Mantener el usuario original
         encuesta.setUsuario(encuestaOriginal.getUsuario());
 
         encuestaService.guardarEncuesta(encuesta);
@@ -203,23 +178,17 @@ public class EncuestaController {
         return "redirect:/encuestas";
     }
 
-
-    //Metodo para mostrar todas las encuestas o filtrar por nivel de satisfacción
     @GetMapping("/encuestas/filter")
     public String filtrarEncuestas(@RequestParam(required = false) Integer nivelSatisfaccion, Model model) {
         List<Encuesta> encuestas;
 
-        // Si el nivel de satisfacción está presente, se filtran las encuestas
         if (nivelSatisfaccion != null && nivelSatisfaccion > 0) {
             encuestas = encuestaService.obtenerEncuestasPorNivelSatisfaccion(nivelSatisfaccion);
         } else {
-            // Si no hay filtro, se muestran todas las encuestas
             encuestas = encuestaService.obtenerEncuestas();
         }
 
-        //He creado otra vez las estadisticas dentro de este controlador, ya que también me interesa
-        //saberlas dentro de cada nivel de satisfacción. Aunque la distribución de porcentajes no tenga
-        //sentido ya que siempre va a ser del 100% dentro del filtro
+
         long numTotalEncuestas = encuestaService.obtenerCantidadEncuestas();
         double promedioEdad = encuestas.stream()
                 .mapToInt(Encuesta::getEdad)
@@ -262,6 +231,6 @@ public class EncuestaController {
         List<Encuesta> encuestas = encuestaService.obtenerAnunciosPorUsuario(usuario);
         model.addAttribute("encuestas", encuestas);
 
-        return "encuesta-propias"; // vista para los anuncios del usuario
+        return "encuesta-propias";
     }
 }

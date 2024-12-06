@@ -28,12 +28,12 @@
                 <li class="nav-item">
                     <a class="nav-link text-white" th:href="@{/encuestas}">Encuestas</a>
                 </li>
-                <th:block sec:authorize="isAuthenticated()">
+                <th:block sec:authorize="hasAuthority('ROLE_USER')">
                     <li class="nav-item">
                         <a class="nav-link text-white" th:href="@{/misEncuestas}">Mis encuestas</a>
                     </li>
                 </th:block>
-                <th:block sec:authorize="hasAuthority('ADMIN')">
+                <th:block sec:authorize="hasAuthority('ROLE_ADMIN')">
                     <li class="nav-item">
                         <a class="nav-link text-white" th:href="@{/usuarios}">Listado de usuarios</a>
                     </li>

@@ -9,7 +9,6 @@ import lombok.NoArgsConstructor;
 
 import java.time.LocalDate;
 
-//Anotaciones de LomBok
 @Data
 @NoArgsConstructor
 @AllArgsConstructor

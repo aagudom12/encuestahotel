@@ -32,6 +32,13 @@
             <div class="text-danger" th:if="${#fields.hasErrors('nombre')}" th:errors="*{nombre}"></div>
         </div>
 
+        <!-- Apellidos -->
+        <div class="mb-3">
+            <label for="apellidos" class="form-label">Apellidos</label>
+            <input type="text" id="apellidos" name="apellidos" class="form-control" th:field="*{apellidos}" />
+            <div class="text-danger" th:if="${#fields.hasErrors('apellidos')}" th:errors="*{apellidos}"></div>
+        </div>
+
         <button type="submit" class="btn btn-primary">Registrar</button>
     </form>
 </div>

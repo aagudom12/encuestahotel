@@ -62,7 +62,7 @@ public class UsuarioController {
         usuarioService.guardarUsuario(usuario);
 
         model.addAttribute("registroExitoso", true);
-        return "redirect:/login"; // Redirige al login tras el registro exitoso
+        return "redirect:/login";
     }
 
     @GetMapping("/usuarios/eliminar/{id}")
