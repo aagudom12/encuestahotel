@@ -29,8 +29,8 @@ public class SecurityConfig {
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http
                 .authorizeHttpRequests(authorize -> authorize
-                        .requestMatchers("/login", "/logout", "/nuevoUsuario", "/encuestas").permitAll()
-                        .requestMatchers("/encuestas/view/*").hasRole("ADMIN")
+                        .requestMatchers("/login", "/logout", "/nuevoUsuario", "/encuestas", "/encuestas/filter").permitAll()
+                        .requestMatchers("/usuarios", "/usuarios/**").hasRole("ADMIN")
                         //.requestMatchers("/categorias/new").hasRole("USER")
                         .anyRequest().authenticated()   /* Por ejemplo para la URL "/productos/new" habría que estar autenticado con cualquier ROL */
                 )
@@ -44,7 +44,7 @@ public class SecurityConfig {
                 )
                 .logout(logout -> logout
                         .logoutUrl("/logout") // URL para el logout
-                        .logoutSuccessUrl("/login?logout") // URL de redirección después de logout
+                        .logoutSuccessUrl("/encuestas?logout") // URL de redirección después de logout
                         .invalidateHttpSession(true) // Invalida la sesión
                         .deleteCookies("JSESSIONID") // Borra las cookies de sesión
                         .permitAll()

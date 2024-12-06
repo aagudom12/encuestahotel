@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.security.Principal;
 import java.util.List;
@@ -144,13 +145,25 @@ public class EncuestaController {
     }
 
     //Al pulsar el botón correspondiente con esta ruta, si existe el objeto en la bd, será eliminado
-    @GetMapping("encuestas/del/{id}")
-    public String delete(@PathVariable Long id, Model model){
-        Optional<Encuesta> encuesta = encuestaService.obtenerEncuestaPorId(id);
-        if(encuesta.isPresent()){
-            encuestaService.eliminarEncuesta(id);
+    @GetMapping("/encuestas/del/{id}")
+    public String delete(@PathVariable Long id, Principal principal, RedirectAttributes redirectAttributes){
+        // Obtener el usuario autenticado
+        String emailUsuario = principal.getName();
+        Usuario usuario = usuarioService.comprobarUsuarioPorEmail(emailUsuario)
+                .orElseThrow(() -> new RuntimeException("Usuario no encontrado"));
 
+        // Verificar que el anuncio pertenece al usuario
+        Encuesta encuesta = encuestaService.obtenerEncuestaPorId(id)
+                .orElseThrow(() -> new RuntimeException("Anuncio no encontrado"));
+
+        if (!encuesta.getUsuario().getId().equals(usuario.getId())) {
+            // Añadir mensaje de error y redirigir
+            redirectAttributes.addFlashAttribute("error", "No tienes permiso para eliminar esta encuesta.");
+            return "redirect:/misEncuestas";
         }
+
+        encuestaService.eliminarEncuesta(id);
+        redirectAttributes.addFlashAttribute("success", "Encuesta eliminada exitosamente.");
         return "redirect:/encuestas";
     }
 
@@ -168,17 +181,31 @@ public class EncuestaController {
 
     //Funcionamiento muy parecido al de cuando se guarda la nueva encuesta
     @PostMapping("/encuestas/edit/{id}")
-    public String confirmarEdit(@Valid Encuesta encuesta, BindingResult bindingResult, Model model){
+    public String confirmarEdit(@PathVariable Long id, @Valid Encuesta encuesta, BindingResult bindingResult, Principal principal, RedirectAttributes redirectAttributes){
         if(bindingResult.hasErrors()){
             return "encuesta-edit";
         }
+
+        Encuesta encuestaOriginal = encuestaService.obtenerEncuestaPorId(id)
+                .orElseThrow(() -> new RuntimeException("Encuesta no encontrada"));
+
+        String emailUsuario = principal.getName();
+        if (!encuestaOriginal.getUsuario().getEmail().equals(emailUsuario)) {
+            redirectAttributes.addFlashAttribute("error", "No tienes permiso para eliminar esta encuesta.");
+            return "redirect:/misEncuestas";
+        }
+
+        // Mantener el usuario original
+        encuesta.setUsuario(encuestaOriginal.getUsuario());
+
         encuestaService.guardarEncuesta(encuesta);
+        redirectAttributes.addFlashAttribute("success", "Encuesta editada exitosamente.");
         return "redirect:/encuestas";
     }
 
 
     //Metodo para mostrar todas las encuestas o filtrar por nivel de satisfacción
-    @GetMapping("encuestas/filter")
+    @GetMapping("/encuestas/filter")
     public String filtrarEncuestas(@RequestParam(required = false) Integer nivelSatisfaccion, Model model) {
         List<Encuesta> encuestas;
 
