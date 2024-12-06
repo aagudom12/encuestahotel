@@ -29,7 +29,7 @@ public class SecurityConfig {
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http
                 .authorizeHttpRequests(authorize -> authorize
-                        .requestMatchers("/login", "/logout", "/nuevoUsuario", "/encuestas", "/encuestas/filter").permitAll()
+                        .requestMatchers("/login", "/logout", "/nuevoUsuario", "/encuestas", "/encuestas/filter", "/encuestas/view/**").permitAll()
                         .requestMatchers("/usuarios", "/usuarios/**").hasRole("ADMIN")
                         //.requestMatchers("/categorias/new").hasRole("USER")
                         .anyRequest().authenticated()   /* Por ejemplo para la URL "/productos/new" habría que estar autenticado con cualquier ROL */

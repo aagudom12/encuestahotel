@@ -6,11 +6,15 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Listado de Encuestas</title>
     <link th:href="@{/css/style.css}"  rel="stylesheet">
-    <!-- Incluir Bootstrap CSS -->
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
     <style>
         .mt-5{
             padding-bottom: 2%;
+        }
+
+        .emailResaltado:hover{
+            text-decoration: underline;
+            color: #007bff;
         }
     </style>
 </head>
@@ -73,6 +77,7 @@
                 <option value="5">5 - Muy insatisfecho</option>
             </select>
             <button type="submit" class="btn btn-primary">Filtrar</button>
+            <a th:href="@{/encuestas}" class="btn btn-secondary">Borrar filtro</a>
         </form>
     </div>
 
@@ -82,15 +87,12 @@
 
         <ul class="list-group">
             <li th:each="encuesta : ${encuestas}" class="list-group-item">
-                <h5 th:text="${encuesta.nombre}">Nombre</h5>
+                <h5>
+                    <a class="emailResaltado" th:href="@{'encuestas/view/' + ${encuesta.id}}" th:text="${encuesta.email}"></a>
+                </h5>
+                <!--<h5 th:text="${encuesta.email}">Email</h5>-->
                 <p><strong>Fecha de estancia:</strong> <span th:text="${encuesta.fechaEstancia}"></span></p>
                 <p><strong>Nivel de satisfacción:</strong> <span th:text="${encuesta.nivelSatisfaccion}"></span></p>
-
-                <!--<div class="btn-group">
-                    <a th:href="@{/encuestas/view/{id}(id=${encuesta.id})}" class="btn btn-info btn-sm">Ver</a>
-                    <a th:href="@{/encuestas/edit/{id}(id=${encuesta.id})}" class="btn btn-warning btn-sm">Editar</a>
-                    <a th:href="@{/encuestas/del/{id}(id=${encuesta.id})}" class="btn btn-danger btn-sm">Borrar</a>
-                </div>-->
             </li>
         </ul>
     </div>
@@ -115,14 +117,8 @@
     <div th:if="${param.logout}">
         <p>Has cerrado sesión correctamente.</p>
     </div>
-
-    <!--<a th:href="@{/logout}">Cerrar sesión</a>-->
-    <!--<form th:action="@{/logout}" method="post">
-        <button type="submit" class="btn btn-danger">Cerrar sesión</button>
-    </form>-->
 </div>
 
-<!-- Incluir Bootstrap JS y jQuery -->
 <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.3/dist/umd/popper.min.js"></script>
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
